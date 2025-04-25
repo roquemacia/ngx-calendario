@@ -1,0 +1,29 @@
+<div>
+  {{selectedYear() }} - {{selectedMonth()}}
+  <div class="calendar">
+    <div class="buttons">
+      <button (click)="previous()">Previous</button>
+      <button (click)="next()">Next</button>
+    </div>
+    <div class="calendar-header">
+      @for (dayHeader of dayHeaders; track $index) {
+        <div class="day">
+          {{ dayHeader }}
+        </div>
+      }
+    </div>
+    <div class="calendar-body">
+      @for (day of days(); track $index) {
+        <div class="day">
+          <div class="day-marker">{{ day.date | date : 'd' }}</div>
+          <div class="day-events">
+            @for(event of day.events; track $index) {
+              <span>{{ event }}</span>
+            }
+          </div>
+          <div class="day-content"></div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
