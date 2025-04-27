@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NgxCalendar } from 'ngx-calendar';
+import { Component, signal } from '@angular/core';
+import { CalendarEvent, NgxCalendar } from 'ngx-calendar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgxCalendar],
+  imports: [NgxCalendar],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'ngx-calendar-app';
+  events = signal<CalendarEvent[]>([
+    {
+      date: new Date(new Date().setFullYear(2000, 0, 2)),
+      title: "Hacer el calendario",
+    }
+  ]);
 }

@@ -1,12 +1,11 @@
 .calendar {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .calendar-header {
   flex: 1;
-  display: grid;
-  grid-template: "1fr 1fr 1fr 1fr 1fr 1fr 1fr";
+  display: contents;
   .day {
     font-size: 1.5rem;
     min-width: 100px;
@@ -17,8 +16,7 @@
 
 .calendar-body {
   flex: 1;
-  display: grid;
-  grid-template: "1fr 1fr 1fr 1fr 1fr 1fr 1fr";
+  display: contents;
   .day {
     min-width: 100px;
     min-height: 100px;

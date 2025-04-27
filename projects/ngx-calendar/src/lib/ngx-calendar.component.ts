@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, signal } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { CalendarDate } from './models/calendarDate.model';
+import { CalendarEvent } from './models/calendarEvent.model';
+import { CalendarTuple } from './models/calendarEventTuple.model';
 
 @Component({
   selector: 'ngx-calendar',
@@ -9,16 +11,45 @@ import { CalendarDate } from './models/calendarDate.model';
   styleUrls: ["./ngx-calendar.component.scss"]
 })
 export class NgxCalendar {
-  dayHeaders = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  days = signal<CalendarDate[]>([]);
+  protected dayHeaders = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  private days = signal<CalendarDate[]>([]);
 
-  selectedYear = signal(2000);
-  selectedMonth = signal(0);
+  protected daysWithEvents = computed<CalendarDate[]>(() => {
+    const daysInMonth = this.days();
+    const formateedEvents = this.formatEvents();
+    if (Object.keys(formateedEvents).length == 0) return daysInMonth;
+    return daysInMonth.map((v, i) => {
+      if (!v.date) return v;
+      return {
+        ...v,
+        events: formateedEvents[this.formatDate(v.date)]
+      } as CalendarDate;
+    });
+  });
 
-  lastDayPrevMonth = 0;
-  firstDayNextMonth = 0;
+  protected selectedYear = signal(2000);
+  protected selectedMonth = signal(0);
 
-  selectedMonthEffect = effect(() => {
+  protected lastDayPrevMonth = 0;
+  protected firstDayNextMonth = 0;
+
+  public events = input<CalendarEvent[]>();
+
+  private formatEvents = computed<CalendarTuple>(() => {
+    const eventArray = this.events() ?? [];
+    // Filter the array to only show and process the events to show
+    const filteredEvents = eventArray.filter((e) => e.date.getMonth() == this.selectedMonth());
+    const diasMap: CalendarTuple = {};
+    // Transform the array into a tuple object with key day
+    filteredEvents.forEach((event) => {
+      const presentEvents = diasMap[this.formatDate(event.date)] ?? [];
+      presentEvents.push(event);
+      diasMap[this.formatDate(event.date)] = presentEvents;
+    });
+    return diasMap;
+  });
+
+  private selectedMonthEffect = effect(() => {
     const dummyDate = new Date();
     //Get first date
     dummyDate.setUTCFullYear(this.selectedYear(), this.selectedMonth(), 1);
@@ -42,22 +73,22 @@ export class NgxCalendar {
     ] as CalendarDate[]);
   });
 
-  formatDate(date: Date) {
+  private formatDate(date: Date) {
     if (!date) throw new Error("Invalid Date");
-    return `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`;
+    return `${date.getUTCFullYear()}-${date.getUTCMonth()+1}-${date.getUTCDate()}`;
   }
 
-  createArray(length: number) {
+  private createArray(length: number) {
     return Array.from(Array(length), (_, i) => i)
   }
 
-  next() {
+  public nextMonth() {
     this.selectedMonth.update((m) =>
       (m == 11) ? 0 : ++m
     );
   }
 
-  previous() {
+  public previousMonth() {
     this.selectedMonth.update((m) =>
       (m == 0) ? 11 : --m
     );
