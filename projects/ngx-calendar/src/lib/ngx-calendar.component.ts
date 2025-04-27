@@ -1,21 +1,28 @@
-import { DatePipe } from '@angular/common';
-import { Component, computed, effect, input, signal } from '@angular/core';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
+import { Component, computed, contentChild, input, signal, TemplateRef } from '@angular/core';
 import { CalendarDate } from './models/calendarDate.model';
 import { CalendarEvent } from './models/calendarEvent.model';
 import { CalendarTuple } from './models/calendarEventTuple.model';
 
 @Component({
   selector: 'ngx-calendar',
-  imports: [DatePipe],
+  imports: [DatePipe, NgTemplateOutlet],
   templateUrl: "./ngx-calendar.component.html",
   styleUrls: ["./ngx-calendar.component.scss"]
 })
 export class NgxCalendar {
+
+  // #region Templates
+  buttonsContent = contentChild<TemplateRef<unknown>>("buttonsContent");
+  dayContent = contentChild<TemplateRef<unknown>>("dayContent");
+  eventsContent = contentChild<TemplateRef<unknown>>("eventsContent");
+  eventContent = contentChild<TemplateRef<unknown>>("eventContent");
+
   protected dayHeaders = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  private days = signal<CalendarDate[]>([]);
+  private daysInMonth = signal<CalendarDate[]>([]);
 
   protected daysWithEvents = computed<CalendarDate[]>(() => {
-    const daysInMonth = this.days();
+    const daysInMonth = this.daysInMonth();
     const formateedEvents = this.formatEvents();
     if (Object.keys(formateedEvents).length == 0) return daysInMonth;
     return daysInMonth.map((v, i) => {
@@ -25,6 +32,30 @@ export class NgxCalendar {
         events: formateedEvents[this.formatDate(v.date)]
       } as CalendarDate;
     });
+  });
+
+  protected days = computed<(CalendarDate | undefined)[]>(() => {
+    const dummyDate = new Date();
+    //Get first date
+    dummyDate.setUTCFullYear(this.selectedYear(), this.selectedMonth(), 1);
+    dummyDate.setUTCHours(0, 0, 0);
+    const leftOffset = dummyDate.getDay() - 1;
+    const lastMonth = this.createArray(leftOffset).map(() => undefined);
+    dummyDate.setUTCMonth(dummyDate.getMonth() +1);
+    dummyDate.setUTCDate(dummyDate.getDate() -1);
+    const rightOffset = dummyDate.getDay() - 1;
+    const nextMonth = this.createArray(Math.abs(rightOffset - 6)).map(() => undefined);
+    return [
+      ...lastMonth,
+      ...this.createArray(dummyDate.getDate()).map((v, i) => {
+        const date = new Date();
+        date.setUTCFullYear(this.selectedYear(), this.selectedMonth(), i+1);
+        return {
+          date: date,
+        };
+      }),
+      ...nextMonth
+    ];
   });
 
   protected selectedYear = signal(2000);
@@ -47,30 +78,6 @@ export class NgxCalendar {
       diasMap[this.formatDate(event.date)] = presentEvents;
     });
     return diasMap;
-  });
-
-  private selectedMonthEffect = effect(() => {
-    const dummyDate = new Date();
-    //Get first date
-    dummyDate.setUTCFullYear(this.selectedYear(), this.selectedMonth(), 1);
-    dummyDate.setUTCHours(0, 0, 0);
-    const leftOffset = dummyDate.getDay() - 1;
-    const lastMonth = this.createArray(leftOffset);
-    dummyDate.setUTCMonth(dummyDate.getMonth() +1);
-    dummyDate.setUTCDate(dummyDate.getDate() -1);
-    const rightOffset = dummyDate.getDay() - 1;
-    const nextMonth = this.createArray(Math.abs(rightOffset - 6));
-    this.days.set([
-      ...lastMonth,
-      ...this.createArray(dummyDate.getDate()).map((v, i) => {
-        const date = new Date();
-        date.setUTCFullYear(this.selectedYear(), this.selectedMonth(), i+1);
-        return {
-          date: date,
-        };
-      }),
-      ...nextMonth
-    ] as CalendarDate[]);
   });
 
   private formatDate(date: Date) {

@@ -1,29 +1,59 @@
+<div>{{ selectedYear() }} - {{ selectedMonth() }}</div>
+
 <div>
-  {{selectedYear() }} - {{selectedMonth()}}
+  <ng-container [ngTemplateOutlet]="buttonsContent() || baseButtons" />
+</div>
+
+<div class="calendar">
+  <div class="calendar-header">
+    @for (dayHeader of dayHeaders; track $index) {
+    <div class="day">
+      {{ dayHeader }}
+    </div>
+    }
+  </div>
+
+  <div class="calendar-body">
+    @for (day of days(); track $index) {
+    <div class="day">
+      @if (day != undefined) {
+      <ng-container
+        [ngTemplateOutlet]="dayContent() || dayBase"
+        [ngTemplateOutletContext]="{ $implicit: day }"
+      />
+      }
+    </div>
+    }
+  </div>
+</div>
+
+<ng-template #dayBase let-day>
+  <div class="day-marker">{{ day.date | date : "d" }}</div>
+  <ng-container
+    [ngTemplateOutlet]="eventsContent() || eventsBase"
+    [ngTemplateOutletContext]="{ $implicit: day.events }"
+  />
+  <div class="day-content"></div>
+</ng-template>
+
+<ng-template #eventsBase let-events>
+  <div class="day-events">
+    @for(event of events; track $index) {
+    <ng-container
+      [ngTemplateOutlet]="eventContent() || eventBase"
+      [ngTemplateOutletContext]="{ $implicit: event }"
+    />
+    }
+  </div>
+</ng-template>
+
+<ng-template #eventBase let-event>
+  <span>{{ event.title }}</span>
+</ng-template>
+
+<ng-template #baseButtons>
   <div class="buttons">
     <button (click)="previousMonth()">Previous</button>
     <button (click)="nextMonth()">Next</button>
   </div>
-  <div class="calendar">
-    <div class="calendar-header">
-      @for (dayHeader of dayHeaders; track $index) {
-        <div class="day">
-          {{ dayHeader }}
-        </div>
-      }
-    </div>
-    <div class="calendar-body">
-      @for (day of daysWithEvents(); track $index) {
-        <div class="day">
-          <div class="day-marker">{{ day.date | date : 'd' }}</div>
-          <div class="day-events">
-            @for(event of day.events; track $index) {
-              <span>{{ event.title }}</span>
-            }
-          </div>
-          <div class="day-content"></div>
-        </div>
-      }
-    </div>
-  </div>
-</div>
+</ng-template>
