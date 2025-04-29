@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'ngx-calendar-app';
   events = signal<CalendarEvent[]>([
     {
-      date: new Date(new Date().setFullYear(2000, 0, 2)),
+      date: new Date(new Date().setFullYear(2025, 4, 2)),
       title: "Hacer el calendario",
     }
   ]);
