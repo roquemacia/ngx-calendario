@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-library": "ng build --project=ngx-calendario"
   },
   "private": true,
   "dependencies": {
