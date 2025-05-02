@@ -5,12 +5,12 @@ import { CalendarEvent } from './models/calendarEvent.model';
 import { CalendarTuple } from './models/calendarEventTuple.model';
 
 @Component({
-  selector: 'ngx-calendar',
+  selector: 'ngx-calendario',
   imports: [DatePipe, NgTemplateOutlet],
-  templateUrl: "./ngx-calendar.component.html",
-  styleUrls: ["./ngx-calendar.component.scss"]
+  templateUrl: "./ngx-calendario.component.html",
+  styleUrls: ["./ngx-calendario.component.scss"]
 })
-export class NgxCalendar {
+export class NgxCalendario {
 
   // #region Templates
   buttonsContent = contentChild<TemplateRef<unknown>>("buttonsContent");

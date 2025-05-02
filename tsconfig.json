@@ -10,8 +10,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "ngx-calendar": [
-        "./dist/ngx-calendar"
+      "ngx-calendario": [
+        "./dist/ngx-calendario"
       ]
     },
     "skipLibCheck": true,

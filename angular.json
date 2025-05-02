@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-calendar": {
+    "ngx-calendario": {
       "projectType": "library",
-      "root": "projects/ngx-calendar",
-      "sourceRoot": "projects/ngx-calendar/src",
+      "root": "projects/ngx-calendario",
+      "sourceRoot": "projects/ngx-calendario/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-calendar/ng-package.json"
+            "project": "projects/ngx-calendario/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-calendar/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-calendario/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngx-calendar/tsconfig.lib.json"
+              "tsConfig": "projects/ngx-calendario/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/ngx-calendar/tsconfig.spec.json",
+            "tsConfig": "projects/ngx-calendario/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -36,36 +36,36 @@
         }
       }
     },
-    "ngx-calendar-app": {
+    "ngx-calendario-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/ngx-calendar-app",
-      "sourceRoot": "projects/ngx-calendar-app/src",
+      "root": "projects/ngx-calendario-app",
+      "sourceRoot": "projects/ngx-calendario-app/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ngx-calendar-app",
-            "index": "projects/ngx-calendar-app/src/index.html",
-            "browser": "projects/ngx-calendar-app/src/main.ts",
+            "outputPath": "dist/ngx-calendario-app",
+            "index": "projects/ngx-calendario-app/src/index.html",
+            "browser": "projects/ngx-calendario-app/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "projects/ngx-calendar-app/tsconfig.app.json",
+            "tsConfig": "projects/ngx-calendario-app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/ngx-calendar-app/public"
+                "input": "projects/ngx-calendario-app/public"
               }
             ],
             "styles": [
-              "projects/ngx-calendar-app/src/styles.scss"
+              "projects/ngx-calendario-app/src/styles.scss"
             ],
             "scripts": []
           },
@@ -97,10 +97,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ngx-calendar-app:build:production"
+              "buildTarget": "ngx-calendario-app:build:production"
             },
             "development": {
-              "buildTarget": "ngx-calendar-app:build:development"
+              "buildTarget": "ngx-calendario-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -115,16 +115,16 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "projects/ngx-calendar-app/tsconfig.spec.json",
+            "tsConfig": "projects/ngx-calendario-app/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/ngx-calendar-app/public"
+                "input": "projects/ngx-calendario-app/public"
               }
             ],
             "styles": [
-              "projects/ngx-calendar-app/src/styles.scss"
+              "projects/ngx-calendario-app/src/styles.scss"
             ],
             "scripts": []
           }

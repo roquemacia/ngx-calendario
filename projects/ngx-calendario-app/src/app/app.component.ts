@@ -1,14 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { CalendarEvent, NgxCalendar } from 'ngx-calendar';
+import { CalendarEvent, NgxCalendario } from 'ngx-calendario';
 
 @Component({
   selector: 'app-root',
-  imports: [NgxCalendar],
+  imports: [NgxCalendario],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'ngx-calendar-app';
+  title = 'ngx-calendario-app';
   events = signal<CalendarEvent[]>([
     {
       date: new Date(new Date().setFullYear(2025, 4, 2)),
