@@ -87,22 +87,6 @@ ng build ngx-calendario
 
 This will compile the library, and the build artifacts will be placed in the `dist/ngx-calendario` directory.
 
-## Publishing the Library
-
-After building the library, you can publish it to npm:
-
-1. Navigate to the `dist/ngx-calendario` directory:
-
-   ```bash
-   cd dist/ngx-calendario
-   ```
-
-2. Publish the library:
-
-   ```bash
-   npm publish
-   ```
-
 ## Running Unit Tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
@@ -114,3 +98,7 @@ ng test
 ## Additional Resources
 
 For more information on Angular libraries, visit the [Angular Libraries Overview](https://angular.io/guide/libraries).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). Feel free to use it in your own projects!
