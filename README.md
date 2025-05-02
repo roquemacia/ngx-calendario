@@ -1,8 +1,73 @@
-# NgxCalendar
+# NgxCalendario
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+`ngx-calendario` is an Angular library for displaying customizable calendars with event support.
 
-## Development server
+## Installation
+
+To install the library, use npm:
+
+```bash
+npm install ngx-calendario
+```
+
+## Usage
+
+1. Import the `NgxCalendario` component into your Angular application.
+
+   In your `AppModule` or standalone component:
+
+   ```ts
+   import { NgxCalendario } from 'ngx-calendario';
+
+   @Component({
+     imports: [NgxCalendario],
+     templateUrl: '',
+     styleUrl: '',
+   })
+   export class ExampleComponent {
+    year = 2025
+    month = 0 // January
+   }
+   ```
+
+2. Add the `ngx-calendario` component to your template:
+
+   ```html
+   <ngx-calendario 
+     [events]="events" 
+     [selectedYear]="year" 
+     [selectedMonth]="month">
+   </ngx-calendario>
+   ```
+
+3. Provide the `events` input as an array of `CalendarEvent` objects:
+
+   ```ts
+   import { Component, signal } from '@angular/core';
+   import { CalendarEvent } from 'ngx-calendario';
+
+   @Component({
+     selector: 'app-root',
+     templateUrl: './app.component.html',
+     styleUrls: ['./app.component.scss']
+   })
+   export class AppComponent {
+     events = signal<CalendarEvent[]>([
+       {
+         date: new Date(2025, 4, 2),
+         title: 'Build the calendar'
+       }
+     ]);
+   }
+   ```
+
+## Features
+
+- Display a calendar for a specific year and month.
+- Show events on specific dates.
+- Customizable templates for calendar buttons, days, and events.
+
+## Development Server
 
 To start a local development server, run:
 
@@ -12,31 +77,33 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## Building the Library
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+To build the library, run:
 
 ```bash
-ng generate --help
+ng build ngx-calendario
 ```
 
-## Building
+This will compile the library, and the build artifacts will be placed in the `dist/ngx-calendario` directory.
 
-To build the project run:
+## Publishing the Library
 
-```bash
-ng build
-```
+After building the library, you can publish it to npm:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+1. Navigate to the `dist/ngx-calendario` directory:
 
-## Running unit tests
+   ```bash
+   cd dist/ngx-calendario
+   ```
+
+2. Publish the library:
+
+   ```bash
+   npm publish
+   ```
+
+## Running Unit Tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
@@ -44,16 +111,6 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
 ## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For more information on Angular libraries, visit the [Angular Libraries Overview](https://angular.io/guide/libraries).
